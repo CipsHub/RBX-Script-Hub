@@ -4,13 +4,13 @@ _G.BannedNames = "discord.gg/wersdown", "EmardoYT", "TRBenRisk", "RiskAbiYT"
 
 _G.BannedUserIDs = 552716190, 4020587829, 2887293505
 
-for i,v in pairs({BannedNames}) do
+for i,v in pairs({_G.BannedNames}) do
         if plr.Name == v then
            _G.Banned = true
         end
 end
 
-for i,v in pairs({BannedUserIDs}) do
+for i,v in pairs({_G.BannedUserIDs}) do
         if plr.UserId == v then
            _G.Banned = true
         end
