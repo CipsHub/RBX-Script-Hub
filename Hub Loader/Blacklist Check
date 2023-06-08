@@ -1,1 +1,17 @@
+local plr = game:GetService("Players").LocalPlayer
 
+local BannedNames = "discord.gg/wersdown", "EmardoYT", "TRBenRisk", "RiskAbiYT"
+
+local BannedUserIDs = 552716190, 4020587829, 2887293505
+
+for i,v in pairs({BannedNames}) do
+        if plr.Name == v then
+           _G.Banned = true
+        end
+end
+
+for i,v in pairs({BannedUserIDs}) do
+        if plr.UserId == v then
+           _G.Banned = true
+        end
+end
