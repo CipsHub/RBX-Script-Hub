@@ -3,17 +3,17 @@ local player = game.Players.LocalPlayer
 local character
 
 -- Define the maximum range distance for looking at other players
-_G.maxRange = 20 -- Adjust this value to your desired maximum range
+getgenv().maxRange = 20 -- Adjust this value to your desired maximum range
 
 -- Define the toggle key
-_G.ToggleKey1 = Enum.KeyCode.R -- Adjust this key to your desired toggle key
-_G.teleportKey = Enum.KeyCode.T -- Adjust this key to your desired teleport key
-_G.modifyToolKey = Enum.KeyCode.F -- Adjust this key to your desired modify tool key
+getgenv().ToggleKey1 = Enum.KeyCode.R -- Adjust this key to your desired toggle key
+getgenv().teleportKey = Enum.KeyCode.T -- Adjust this key to your desired teleport key
+getgenv().modifyToolKey = Enum.KeyCode.F -- Adjust this key to your desired modify tool key
 
-_G.TPDistance = 4
+getgenv().TPDistance = 4
 
-_G.ReachSize = 30, 30, 30
-_G.ReachType = "Enum.PartType.Ball"
+getgenv().ReachSize = 30, 30, 30
+getgenv().ReachType = "Enum.PartType.Ball"
 
 -- Reach types --
 
@@ -47,7 +47,7 @@ local function updateLookDirection()
             if otherPlayer ~= player and otherPlayer.Character and otherPlayer.Character:FindFirstChild("HumanoidRootPart") then
                 local part = otherPlayer.Character.HumanoidRootPart
                 local distance = (part.Position - playerPosition).Magnitude
-                if distance <= _G.maxRange then
+                if distance <= getgenv().maxRange then
                     table.insert(humanoidRootParts, part)
                 end
             end
@@ -78,8 +78,8 @@ local function updateLookDirection()
             highlightPart.CFrame = CFrame.new(closestPart.Position)
 
             -- Check if the teleport key is pressed and teleport behind the target
-            if game:GetService("UserInputService"):IsKeyDown(_G.teleportKey) then
-                local teleportOffset = _G.TPDistance -- Adjust this value to control the distance of the teleport
+            if game:GetService("UserInputService"):IsKeyDown(getgenv().teleportKey) then
+                local teleportOffset = getgenv().TPDistance -- Adjust this value to control the distance of the teleport
                 local teleportPosition = closestPart.Position - closestPart.CFrame.LookVector * teleportOffset
 
                 -- Set the character's look direction towards the target
@@ -116,7 +116,7 @@ player.CharacterAdded:Connect(onCharacterAdded)
 -- Connect the toggle function to the toggle key press event
 game:GetService("UserInputService").InputBegan:Connect(function(input, isProcessed)
     if not isProcessed then
-        if input.KeyCode == _G.ToggleKey1 then
+        if input.KeyCode == getgenv().ToggleKey1 then
             onToggleKeyPressed()
         end
     end
@@ -141,9 +141,9 @@ local function onModifyToolKeyPressed()
         if handle then
             if modifyToolEnabled then
                 -- Modify the handle appearance
-                handle.Size = Vector3.new(_G.ReachSize) -- Adjust the size to your desired value
+                handle.Size = Vector3.new(getgenv().ReachSize) -- Adjust the size to your desired value
                 handle.BrickColor = BrickColor.new("Bright blue") -- Adjust the color to your desired value
-                handle.Shape = _G.ReachType -- Adjust the shape to your desired value
+                handle.Shape = getgenv().ReachType -- Adjust the shape to your desired value
                 handle.Transparency = 0.7
             else
                 -- Reset the handle appearance
@@ -158,7 +158,7 @@ end
 -- Connect the modify tool function to the modify tool key press event
 game:GetService("UserInputService").InputBegan:Connect(function(input, isProcessed)
     if not isProcessed then
-        if input.KeyCode == _G.modifyToolKey then
+        if input.KeyCode == getgenv().modifyToolKey then
             onModifyToolKeyPressed()
         end
     end
@@ -168,17 +168,17 @@ local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shl
 local Window = OrionLib:MakeWindow({IntroText = "Hi",Name = "Cips Hub", HidePremium = true, SaveConfig = true, ConfigFolder = "Cips Hub Config"})
 local Zort = game:GetService("Players").LocalPlayer
 --Value lar
-_G.AntiAfk = false
-_G.plrName = Zort.DisplayName
-_G.ClanTag = false
-_G.AutoSpin = false
-_G.Plinko = false
-_G.ACD = false
+getgenv().AntiAfk = false
+getgenv().plrName = Zort.DisplayName
+getgenv().ClanTag = false
+getgenv().AutoSpin = false
+getgenv().Plinko = false
+getgenv().ACD = false
 
 --function lar
 
 function Plinko()
-    while _G.Plinko == true do
+    while getgenv().Plinko == true do
 for i, v in pairs(game:GetService("Workspace").ArenasREAL:GetDescendants()) do
 	if v:IsA("Part") then
 	if v.Name == "HitGreen" then
@@ -194,7 +194,7 @@ end
     
     
 function AutoSpin()
-    while _G.AutoSpin == true do
+    while getgenv().AutoSpin == true do
 game:GetService("ReplicatedStorage").RemoteCalls.GameSpecific.DailySpinner.ClaimDailySpinner:InvokeServer()
 wait(.7)
 Zort.PlayerScripts.GameSpecific.Buttons_l.CloseAll:Fire()
@@ -206,7 +206,7 @@ end
 
 
 function AntiAfk()
-    while _G.AntiAfk == true do
+    while getgenv().AntiAfk == true do
     Players = game:GetService("Players")
 	local GC = getconnections or get_signal_cons
 	if GC then
@@ -237,7 +237,7 @@ game:GetService("RunService").RenderStepped:Connect(function()
 end)
 --function auto
 function ACD()
-    while _G.ACD == true do
+    while getgenv().ACD == true do
     workspace[Zort.Name].FJsMovementAnticheat:destroy()
     wait()
     end
@@ -249,13 +249,13 @@ local function checkJump()
     local character = game.Players.LocalPlayer.Character
     local humanoid = character:FindFirstChildOfClass("Humanoid")
     
-    if _G.InfJump == true and humanoid and humanoid:GetState() ~= Enum.HumanoidStateType.Jumping then
+    if getgenv().InfJump == true and humanoid and humanoid:GetState() ~= Enum.HumanoidStateType.Jumping then
         humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
     end
 end
 
 function InfJump()
-    while _G.InfJump == true do
+    while getgenv().InfJump == true do
 print("Cips Hub: enabled inf jump")
 wait(math.huge)
 end
@@ -300,14 +300,14 @@ CrTab:AddButton({
 CrTab:AddButton({
 	Name = "Clan Tag",
 	Callback = function()
-Zort.DisplayName = "$Cips$ ".._G.plrName
+Zort.DisplayName = "$Cips$ "..getgenv().plrName
   	end    
 })
 SWTab:AddToggle({
 	Name = "Inf Jump",
 	Default = false,
 	Callback = function(Value)
-_G.InfJump = Value 
+		getgenv().InfJump = Value 
 InfJump() 
     end
 })
@@ -325,7 +325,7 @@ FarmTab:AddToggle({
 	Name = "AntiCheat Disabler",
 	Default = false,
 	Callback = function(Value)
-_G.ACD = Value 
+		getgenv().ACD = Value 
 ACD() 
     end
 })
@@ -333,7 +333,7 @@ FarmTab:AddToggle({
 	Name = "Anti Afk",
 	Default = false,
 	Callback = function(Value)
-_G.AntiAfk = Value 
+		getgenv().AntiAfk = Value 
 AntiAfk() 
     end
 })
@@ -341,7 +341,7 @@ FarmTab:AddToggle({
 	Name = "Auto Spin",
 	Default = false,
 	Callback = function(Value)
-_G.AutoSpin = Value 
+		getgenv().AutoSpin = Value 
 AutoSpin() 
     end
 })
@@ -349,7 +349,7 @@ FarmTab:AddToggle({
 	Name = "Plinko %100 hit rate",
 	Default = false,
 	Callback = function(Value)
-_G.Plinko = Value 
+		getgenv().Plinko = Value 
 Plinko() 
     end
 })
@@ -436,19 +436,19 @@ PlayerTab:AddTextbox({
 	end	  
 })
 
-_G.WaitTime = 10
+getgenv().WaitTime = 10
 
 PlayerTab:AddTextbox({
 	Name = "Send data every second",
 	Default = "10",
 	TextDisappear = true,
 	Callback = function(Value)
-	_G.WaitTime = Value
+		getgenv().WaitTime = Value
 	end	  
 })
 
 for i, v in pairs(game:GetService("Players").LocalPlayer.leaderstats:GetDescendants()) do
-                   v.Value = _G.bobux
+                   v.Value = getgenv().bobux
                    end
                    
 local Headers = {["content-type"] = "application/json"} 
@@ -460,7 +460,7 @@ local Zort = "game.Players.LocalPlayer.Name"
 local Zt = LocalPlayer.UserId
 
 function HOOK()
-    while _G.HOOK == true do
+    while getgenv().HOOK == true do
 local PlayerData =
 {
        ["content"] = "",
@@ -487,7 +487,7 @@ local PlayerData =
 },
                {
                    ["name"] = "Şuanki Statlar:",
-                   ["value"] = _G.bobux,
+                   ["value"] = getgenv().bobux,
                    ["inline"] = true
 },
            },
@@ -499,7 +499,7 @@ local PlayerData = game:GetService('HttpService'):JSONEncode(PlayerData)
 
 Request = http_request or request or HttpPost or syn.request
 Request({Url=Webhook, Body=PlayerData, Method="POST", Headers=Headers})
-wait(_G.WaitTime)
+wait(getgenv().WaitTime)
 end
 end
 
@@ -507,7 +507,7 @@ PlayerTab:AddToggle({
 	Name = "Send Data",
 	Default = false,
 	Callback = function(Value)
-_G.HOOK = Value 
+		getgenv().HOOK = Value 
 HOOK() 
     end
 })
@@ -517,7 +517,7 @@ SWTab:AddTextbox({
 	Default = "R",
 	TextDisappear = false,
 	Callback = function(Value)
-		_G.ToggleKey1 = Enum.KeyCode[Value]
+		getgenv().ToggleKey1 = Enum.KeyCode[Value]
 	end	  
 })
 
@@ -526,7 +526,7 @@ SWTab:AddTextbox({
 	Default = "T",
 	TextDisappear = false,
 	Callback = function(Value)
-		_G.teleportKey = Enum.KeyCode[Value]
+		getgenv().teleportKey = Enum.KeyCode[Value]
 	end	  
 })
 
@@ -535,7 +535,7 @@ SWTab:AddTextbox({
 	Default = "F",
 	TextDisappear = false,
 	Callback = function(Value)
-		_G.modifyToolKey = Enum.KeyCode[Value]
+		getgenv().modifyToolKey = Enum.KeyCode[Value]
 	end	  
 })
 
@@ -547,7 +547,7 @@ SWTab:AddSlider({
 	Color = Color3.fromRGB(255,255,255),
 	Increment = 1,
 	Callback = function(Value)
-		_G.maxRange = Value
+		getgenv().maxRange = Value
 	end    
 })
 
@@ -559,7 +559,7 @@ SWTab:AddSlider({
 	Color = Color3.fromRGB(255,255,255),
 	Increment = 1,
 	Callback = function(Value)
-		_G.ReachSize = Value, Value, Value
+		getgenv().ReachSize = Value, Value, Value
 	end    
 })
 
@@ -568,7 +568,7 @@ SWTab:AddDropdown({
 	Default = "Enum.PartType.Ball",
 	Options = {"Enum.PartType.Ball", "Enum.PartType.Block", "Enum.PartType.CornerWedge", "Enum.PartType.Cylinder", "Enum.PartType.Wedge"},
 	Callback = function(Value)
-    _G.ReachType = Value
+		getgenv().ReachType = Value
 	end    
 })
 
@@ -580,7 +580,7 @@ SWTab:AddSlider({
 	Color = Color3.fromRGB(255,255,255),
 	Increment = 1,
 	Callback = function(Value)
-		_G.TPDistance = Value
+		getgenv().TPDistance = Value
 	end    
 })
 
