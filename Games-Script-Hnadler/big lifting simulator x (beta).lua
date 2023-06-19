@@ -10,11 +10,137 @@ getgenv().TripleAutoHatch = false
 getgenv().AutoHatch = false
 getgenv().AntiAfk = false
 getgenv().AutoTool = false
+getgenv().AutoCraft = false
+getgenv().TPauraBad = false
+getgenv().TPauraGood = false
+getgenv().TPauraMode = nil
+getgenv().TPaura = false
 
+function TPaura()
+	while _G.TPaura == true do
+		if _G.TPauraMode == "Bring" then
+		for i, v in pairs(workspace.__THINGS.Npcs:GetDescendants()) do
+		if v.Name == "HumanoidRootPart" then
+			v.CFrame = game:GetService("Workspace")[Zort.Name].HumanoidRootPart.CFrame * CFrame.new(0, 0, 3)
+			wait(.15)
+		end
+	end
+end
+	if _G.TPauraMode == "Goto" then
+	for i, v in pairs(workspace.__THINGS.Npcs:GetDescendants()) do
+		if v.Name == "HumanoidRootPart" then
+			game:GetService("Workspace")[Zort.Name].HumanoidRootPart.CFrame = v.CFrame * CFrame.new(0, 0, 3)
+			wait(.3)
+		end
+	end
+end
+end
+end
+function TPauraBad()
+	while getgenv().TPauraBad == true do
+		if getgenv().TPauraMode == "Bring" then
+        for i, b in pairs(workspace.__THINGS.Npcs:GetDescendants()) do
+		if b.Name == "Head" then
+        if b.Attachment.Text.Title.Text == BAD then
+		for i, v in pairs(workspace.__THINGS.Npcs:GetDescendants()) do
+		if v.Name == "HumanoidRootPart" then
+                print("test")
+			v.CFrame = game:GetService("Workspace")[Zort.Name].HumanoidRootPart.CFrame * CFrame.new(0, 0, 3)
+			wait(.15)
+		end
+	end
+end
+end
+end
+end
+	if getgenv().TPauraMode == "Goto" then
+    	for i, b in pairs(workspace.__THINGS.Npcs:GetDescendants()) do
+		if b.Name == "Head" then
+        if b.Attachment.Text.Title.Text == BAD then
+	for i, v in pairs(workspace.__THINGS.Npcs:GetDescendants()) do
+		if v.Name == "HumanoidRootPart" then
+                print("test")
+			game:GetService("Workspace")[Zort.Name].HumanoidRootPart.CFrame = v.CFrame * CFrame.new(0, 0, 3)
+			wait(.3)
+		end
+	end
+end
+end
+end
+end
+wait()
+end
+end
+function TPauraGood()
+	while getgenv().TPauraGood == true do
+		if getgenv().TPauraMode == "Bring" then
+        for i, b in pairs(workspace.__THINGS.Npcs:GetDescendants()) do
+		if b.Name == "Head" then
+        if b.Attachment.Text.Title.Text == GOOD then
+		for i, v in pairs(workspace.__THINGS.Npcs:GetDescendants()) do
+		if v.Name == "HumanoidRootPart" then
+        print("test")
+			v.CFrame = game:GetService("Workspace")[Zort.Name].HumanoidRootPart.CFrame * CFrame.new(0, 0, 3)
+			wait(.15)
+		end
+	end
+end
+end
+end
+end
+	if getgenv().TPauraMode == "Goto" then
+    	for i, b in pairs(workspace.__THINGS.Npcs:GetDescendants()) do
+		if b.Name == "Head" then
+        if b.Attachment.Text.Title.Text == GOOD then
+	for i, v in pairs(workspace.__THINGS.Npcs:GetDescendants()) do
+		if v.Name == "HumanoidRootPart" then
+                print("test")
+			game:GetService("Workspace")[Zort.Name].HumanoidRootPart.CFrame = v.CFrame * CFrame.new(0, 0, 3)
+			wait(.3)
+		end
+	end
+end
+end
+end
+end
+wait()
+end
+end
+function FastAutoHatch()
+    while getgenv().FastAutoHatch == true do
+local args = {
+    [1] = SelectEgg,
+    [2] = false
+}
 
---function lar
+game:GetService("ReplicatedStorage").Assets.Network.HatchEgg:InvokeServer(unpack(args))
+game:GetService("ReplicatedStorage").Assets.Network.HatchEgg:InvokeServer(unpack(args))
+game:GetService("ReplicatedStorage").Assets.Network.HatchEgg:InvokeServer(unpack(args))
+game:GetService("ReplicatedStorage").Assets.Network.HatchEgg:InvokeServer(unpack(args))
+game:GetService("ReplicatedStorage").Assets.Network.HatchEgg:InvokeServer(unpack(args))
+game:GetService("ReplicatedStorage").Assets.Network.HatchEgg:InvokeServer(unpack(args))
+    wait(3)
+    end
+end
+function AutoHatch()
+    while getgenv().AutoHatch == true do
+local args = {
+    [1] = SelectEgg,
+    [2] = false
+}
+
+game:GetService("ReplicatedStorage").Assets.Network.HatchEgg:InvokeServer(unpack(args))
+    wait(3)
+    end
+end
+function AutoCraft()
+    while getgenv().AutoCraft == true do
+game:GetService("ReplicatedStorage").Assets.Network.CraftAll:FireServer()
+    wait(3)
+    end
+end
 function AntiAfk()
-    while _G.AntiAfk == true do
+    while getgenv().AntiAfk == true do
     Players = game:GetService("Players")
 	local GC = getconnections or get_signal_cons
 	if GC then
@@ -207,7 +333,6 @@ function AutoTool()
     game:GetService("ReplicatedStorage"):WaitForChild("Assets"):WaitForChild("Network"):WaitForChild("EquipTool"):FireServer(getgenv().ToolSelect)
 end
 end
---function auto
 
 --menü
 local FarmTab = Window:MakeTab({
@@ -220,7 +345,11 @@ local StageTab = Window:MakeTab({
 	Icon = "rbxassetid://4483345998",
 	PremiumOnly = false
 })
---buton
+local EggTab = Window:MakeTab({
+	Name = "Egg",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
 FarmTab:AddToggle({
 	Name = "Anti Afk",
 	Default = false,
@@ -230,11 +359,27 @@ AntiAfk()
     end
 })
 FarmTab:AddToggle({
-	Name = "Auto Lift",
+	Name = "Auto Use Tool",
 	Default = false,
 	Callback = function(Value)
 getgenv().AutoClick = Value 
 AutoClick() 
+    end
+})
+FarmTab:AddDropdown({
+	Name = "Select TP method",
+	Default = "Bring",
+	Options = {"Bring", "Goto"},
+	Callback = function(Value)
+    getgenv().TPauraMode = Value
+	end    
+})
+FarmTab:AddToggle({
+	Name = "TP Aura",
+	Default = false,
+	Callback = function(Value)
+getgenv().TPaura = Value 
+TPaura() 
     end
 })
 FarmTab:AddToggle({
@@ -251,6 +396,38 @@ FarmTab:AddToggle({
 	Callback = function(Value)
 getgenv().AutoRebirth = Value 
 AutoRebirth() 
+    end
+})
+EggTab:AddToggle({
+	Name = "AutoHatch Egg",
+	Default = false,
+	Callback = function(Value)
+getgenv().AutoHatch = Value 
+AutoHatch() 
+    end
+})
+EggTab:AddToggle({
+	Name = "Fast AutoHatch Egg",
+	Default = false,
+	Callback = function(Value)
+getgenv().FastAutoHatch = Value 
+FastAutoHatch() 
+    end
+})
+EggTab:AddDropdown({
+	Name = "Select egg",
+	Default = "StarterEgg",
+	Options = {"StarterEgg", "AlienEgg", "CyberEgg", "DemigodEgg", "MetropolisEgg", "RoboEgg", "DiscoEgg"},
+	Callback = function(Value)
+    getgenv().SelectEgg = Value
+	end    
+})
+EggTab:AddToggle({
+	Name = "Auto Craft",
+	Default = false,
+	Callback = function(Value)
+getgenv().AutoCraft = Value 
+AutoCraft() 
     end
 })
 OrionLib:Init()
