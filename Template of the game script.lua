@@ -7,8 +7,8 @@ local Zort = game:GetService("Players").LocalPlayer
 getgenv().Example = nil -- its a Value u can make false or nil / if u want saving config then dont add it
 
 -- Functionlar
-function Example()
-    while getgenv().Example == true do
+function Example() -- function name
+    while getgenv().Example == true do -- value check and decides what happens when true
       print("u activated function") -- prints when true
       wait(1) -- put how much u want wait
   end
