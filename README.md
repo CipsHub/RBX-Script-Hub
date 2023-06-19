@@ -1,1 +1,1 @@
-# bit.ly/CipsHub
+# https://bit.ly/CipsHub
