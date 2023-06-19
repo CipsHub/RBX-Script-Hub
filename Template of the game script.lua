@@ -9,7 +9,7 @@ getgenv().Example = nil -- its a Value u can make false or nil / if u want savin
 -- Functionlar
 function Example()
     while getgenv().Example == true do
-      print("u clicked button") -- prints when true
+      print("u activated function") -- prints when true
       wait(1) -- put how much u want wait
   end
 end
