@@ -19,8 +19,8 @@ local player = game.Players.LocalPlayer
 local playerId = player.UserId
 
 if Premium[playerId] then
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/CipsHub/RBX-Script-Hub/main/Hub%20Loader/Premium%20Script", true))()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/CipsHub/RBX-Script-Hub/main/Hub%20Loader/Premium%20Script.lua", true))()
     print("Script activated for Premium player")
 else
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/CipsHub/RBX-Script-Hub/main/Hub%20Loader/Game%20Checker%20-%20Script%20Loader", true))()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/CipsHub/RBX-Script-Hub/main/Hub%20Loader/Game%20Checker%20-%20Script%20Loader.lua", true))()
 end
