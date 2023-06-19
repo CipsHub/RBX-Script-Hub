@@ -398,9 +398,9 @@ FarmTab:AddButton({
 	Name = "Server Hop",
 	Callback = function()
 local player = game.Players.LocalPlayer
-local PlaceID = game.PlaceID
+local id = game.PlaceId
 
-game:GetService("TeleportService"):Teleport(PlaceID, player)
+game:GetService("TeleportService"):Teleport(id, player)
   	end    
 })
 CodesTab:AddButton({
