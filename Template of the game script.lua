@@ -1,7 +1,7 @@
 local id = game.PlaceId -- Game id
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))() -- Gui source (orion gui)
 local Window = OrionLib:MakeWindow({IntroText = "Hi",Name = "c1ps Hub", HidePremium = true, SaveConfig = true, ConfigFolder = "c1ps Hub Config"..id}) -- Configs
-local Zort = game:GetService("Players").LocalPlayer
+local Zort = game:GetService("Players").LocalPlayer -- gets client side player / local player
 
 -- Values
 getgenv().Example = nil -- its a Value u can make false or nil / if u want saving config then dont add it
