@@ -28,8 +28,8 @@ local CrTab = Window:MakeTab({
 	PremiumOnly = false
 })
 
-CrTab:AddParagraph("Script made by!","Cips#9611") -- adds to Cr Tab and adds paragraph
-CrTab:AddParagraph("Our discord server:","Cips Hub") -- adds to Cr Tab and adds paragraph
+CrTab:AddParagraph("Script made by!","c1ps") -- adds to Cr Tab and adds paragraph
+CrTab:AddParagraph("Our discord server:","c1ps Hub") -- adds to Cr Tab and adds paragraph
 
  -- makes Button
 CrTab:AddButton({
