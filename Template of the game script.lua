@@ -44,7 +44,7 @@ FarmTab:AddToggle({ -- adds to Farm Tab and makes toggle button
 	Name = "Auto Spin", -- name of the toggle button
 	Default = false, -- when gui opened makes it false
 	Callback = function(Value) -- finds function
-		getgenv().Example = Value -- The Value of function and state
+	getgenv().Example = Value -- The Value of function and state
     Example() -- Function name
-    end
+end
 })
