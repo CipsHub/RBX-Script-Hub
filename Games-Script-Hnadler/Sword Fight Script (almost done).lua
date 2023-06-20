@@ -10,11 +10,11 @@ getgenv().ToggleKey1 = Enum.KeyCode.R -- Adjust this key to your desired toggle 
 getgenv().teleportKey = Enum.KeyCode.T -- Adjust this key to your desired teleport key
 getgenv().modifyToolKey = Enum.KeyCode.F -- Adjust this key to your desired modify tool key
 
-getrenv().autoActivateToolEnabled = false
-
 getgenv().TPDistance = 4
 
-getgenv().ReachSize = 30
+getgenv().ReachSizeY = 30
+getgenv().ReachSizeX = 30
+getgenv().ReachSizeZ = 30
 getgenv().ReachType = "Enum.PartType.Ball"
 
 -- Reach types --
@@ -80,7 +80,7 @@ local function updateLookDirection()
             highlightPart.CFrame = CFrame.new(closestPart.Position)
 
             local tool2 = player.Character:FindFirstChildOfClass("Tool")
-            if not tool2 and autoActivateToolEnabled then
+            if not tool2 and getgenv().autoActivateToolEnabled then
                 -- Search for the tool in a loop until it becomes available
                 while not tool2 do
                     wait()
@@ -88,10 +88,10 @@ local function updateLookDirection()
                 end
             end
 
-            if tool2 and autoActivateToolEnabled then
+            if tool2 and getgenv().autoActivateToolEnabled then
                 tool2:Activate()
             end
-
+            
             -- Check if the teleport key is pressed and teleport behind the target
             if game:GetService("UserInputService"):IsKeyDown(getgenv().teleportKey) then
                 local teleportOffset = getgenv().TPDistance -- Adjust this value to control the distance of the teleport
@@ -156,7 +156,7 @@ local function onModifyToolKeyPressed()
         if handle then
             if modifyToolEnabled then
                 -- Modify the handle appearance
-                handle.Size = Vector3.new(getgenv().ReachSize, getgenv().ReachSize, getgenv().ReachSize) -- Adjust the size to your desired value
+                handle.Size = Vector3.new(getgenv().ReachSizeX, getgenv().ReachSizeY, getgenv().ReachSizeZ) -- Adjust the size to your desired value
                 handle.BrickColor = BrickColor.new("Bright blue") -- Adjust the color to your desired value
                 handle.Shape = getgenv().ReachType -- Adjust the shape to your desired value
                 handle.Transparency = 0.7
@@ -267,9 +267,9 @@ local CrTab = Window:MakeTab({
 	PremiumOnly = false
 })
 
-CrTab:AddParagraph("Script made by!","Cips#9611")
+CrTab:AddParagraph("Script made by!","c1ps")
 
-CrTab:AddParagraph("Our discord server:","Cips Hub")
+CrTab:AddParagraph("Our discord server:","c1ps Hub")
 
 CrTab:AddButton({
 	Name = "Join Discord For Updates and Community!",
@@ -281,7 +281,7 @@ CrTab:AddButton({
 CrTab:AddButton({
 	Name = "Clan Tag",
 	Callback = function()
-Zort.DisplayName = "$Cips$ "..getgenv().plrName
+Zort.DisplayName = "$c1ps$ "..getgenv().plrName
   	end    
 })
 
@@ -295,7 +295,7 @@ InfJump()
 })
 
 SWTab:AddToggle({
-	Name = "Auto Atack",
+	Name = "Auto Swing",
 	Default = false,
 	Callback = function(Value)
 		getgenv().autoActivateToolEnabled = Value 
@@ -364,14 +364,38 @@ SWTab:AddSlider({
 })
 
 SWTab:AddSlider({
-	Name = "Reach Size",
+	Name = "Reach SizeX",
 	Min = 0,
 	Max = 50,
 	Default = 30,
 	Color = Color3.fromRGB(255,255,255),
 	Increment = 1,
 	Callback = function(Value)
-		getgenv().ReachSize = Value
+		getgenv().ReachSizeX = Value
+	end    
+})
+
+SWTab:AddSlider({
+	Name = "Reach SizeY",
+	Min = 0,
+	Max = 50,
+	Default = 30,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	Callback = function(Value)
+		getgenv().ReachSizeY = Value
+	end    
+})
+
+SWTab:AddSlider({
+	Name = "Reach SizeZ",
+	Min = 0,
+	Max = 50,
+	Default = 30,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	Callback = function(Value)
+		getgenv().ReachSizeZ = Value
 	end    
 })
 
@@ -396,7 +420,28 @@ SWTab:AddSlider({
 	end    
 })
 
+SWTab:AddDropdown({
+	Name = "Target Box Color",
+	Default = "Bright red",
+	Options = {"Bright red", "Red", "Black", "Blue", "Cyan", "Pink", "White"},
+	Callback = function(Value)
+    game:GetService("Workspace").Highlight.BrickColor = BrickColor.new(Value)
+	end    
+})
+
+SWTab:AddSlider({
+	Name = "Box Transparency",
+	Min = 0,
+	Max = 1,
+	Default = 0.3,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 0.05,
+	ValueName = ":)",
+	Callback = function(Value)
+    game:GetService("Workspace").Highlight.Transparency = Value
+	end    
+})
+
 OrionLib:Init()
 
 task.wait(2)
-
