@@ -80,7 +80,7 @@ local function updateLookDirection()
             highlightPart.CFrame = CFrame.new(closestPart.Position)
 
             local tool2 = player.Character:FindFirstChildOfClass("Tool")
-            if not tool2 and autoActivateToolEnabled then
+            if not tool2 and getgenv().autoActivateToolEnabled then
                 -- Search for the tool in a loop until it becomes available
                 while not tool2 do
                     wait()
@@ -88,7 +88,7 @@ local function updateLookDirection()
                 end
             end
 
-            if tool2 and autoActivateToolEnabled then
+            if tool2 and getgenv().autoActivateToolEnabled then
                 tool2:Activate()
             end
             
