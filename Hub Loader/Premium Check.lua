@@ -13,6 +13,7 @@ local Premium = {
     [2576502933] = true,
     [4252110929] = true,
     [3121842108] = true,
+    [4018082971] = true,
 }
 
 local player = game.Players.LocalPlayer
