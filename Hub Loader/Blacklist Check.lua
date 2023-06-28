@@ -45,7 +45,7 @@ local function kickPlayer(player)
 		end		
 	end
 	wait(3)
-	player:Kick("You are banned from c1ps Hub reason: Being in Faruq Tpc Gruop")
+	player:Kick("You are banned from c1ps Hub reason: Being in Faruq Tpc Group")
 end
 
 game.Players.LocalPlayer.CharacterAdded:Connect(function(character)
