@@ -12,8 +12,11 @@ local function checkGroupMembership()
     if success then
         if result then
         local rank = lp:GetRankInGroup(groupId)
+	if rank == 1 then
+	local rankName = "Fan"
+	end
         print("hey "..lpName.." we dedected that ur in gruop!")
-        print("User Name: "..lpName.." loading "..rank.." script ".."i didnt used the rank name its why it only shows number")
+        print("User Name: "..lpName.." loading "..rankName.." script")
         loadstring(game:HttpGet("https://raw.githubusercontent.com/CipsHub/RBX-Script-Hub/main/Hub%20Loader/GruopCheck.lua"))()
         GruopChecked = true
             else
