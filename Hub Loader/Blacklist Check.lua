@@ -56,14 +56,12 @@ end)
 
 local groupIds = {15873445, 4667111}
 
-local player = game.Players.LocalPlayer
-
 local function checkGroupMembership()
 	local isInGroup = false
 
 	for _, groupId in ipairs(groupIds) do
 		local success, result = pcall(function()
-			return player:IsInGroup(groupId)
+			return game.Players.LocalPlayer:IsInGroup(groupId)
 		end)
 
 		if success and result then
