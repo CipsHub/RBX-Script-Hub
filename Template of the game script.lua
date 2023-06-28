@@ -1,14 +1,41 @@
 local id = game.PlaceId -- Game id
-local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))() -- Gui source (orion gui)
-local Window = OrionLib:MakeWindow({IntroText = "Hi",Name = "c1ps Hub", HidePremium = true, SaveConfig = true, ConfigFolder = "c1ps Hub Config"..id}) -- Configs
-local Zort = game:GetService("Players").LocalPlayer -- gets client side player / local player
+local lp = game:GetService("Players").LocalPlayer -- gets client side player / local player
+local lpName = lp.Name
+local GruopChecked = nil
+local groupId = 16306842
 
--- Values
-getgenv().Example = nil -- its a Value u can make false or nil / if u want saving config then dont add it
+local function checkGroupMembership()
+    local success, result = pcall(function()
+        return lp:IsInGroup(groupId)
+    end)
+
+    if success then
+        if result then
+        local rank = lp:GetRankInGroup(groupId)
+        print("hey "..lpName.." we dedected that ur in gruop!")
+        print("User Name: "..lpName.." loading "..rank.." script ".."i didnt used the rank name its why it only shows number")
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/CipsHub/RBX-Script-Hub/main/Hub%20Loader/GruopCheck.lua"))()
+        GruopChecked = true
+            else
+            print("Ur not in the gruop!")
+            end
+            else
+            warn("Failed to check group membership:", result)
+    end
+end
+
+checkGroupMembership()
+
+if GruopChecked == nil then
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))() -- Gui source (orion gui)
+local Window = OrionLib:MakeWindow({IntroText = "Hi",Name = "c1ps Hub", HidePremium = true, SaveConfig = true, ConfigFolder = "c1ps Hub Config id: "..id}) -- Configs
+local Example = getgenv().Example
+
+--Example == nil / its a Value u can make false or nil / if u want saving config then dont add it
 
 -- Functionlar
-function Example() -- function name
-    while getgenv().Example == true do -- value check and decides what happens when true
+function FExample() -- function name
+    while Example == true do -- value check and decides what happens when true
       print("u activated function") -- prints when true
       wait(1) -- put how much u want wait
   end
@@ -41,10 +68,14 @@ CrTab:AddButton({
 
 -- makes Toggle Button
 FarmTab:AddToggle({ -- adds to Farm Tab and makes toggle button
-	Name = "Auto Spin", -- name of the toggle button
+	Name = "Example Button", -- name of the toggle button
 	Default = false, -- when gui opened makes it false
 	Callback = function(Value) -- finds function
-	getgenv().Example = Value -- The Value of function and state
-    Example() -- Function name
+	Example = Value -- The Value of function and state
+    FExample() -- Function name
 end
 })
+end
+
+print("c1ps Hub Loaded Config id: "..id)
+print("Hi "..lpName.." Welcome to c1ps Hub Beta")
