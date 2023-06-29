@@ -1,5 +1,5 @@
 local GruopScriptUpdated = false
-getrenv().GEnabled == nil
+getrenv().GEnabled = nil
 
 print("i didnt make Gruop Only Script :skull:")
 
