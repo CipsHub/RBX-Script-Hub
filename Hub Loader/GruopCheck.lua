@@ -8,7 +8,7 @@ local GruopScriptUpdated = true
 getrenv().GruopChecked = true
 end
 
-if GruopScriptUpdated = false then
+if GruopScriptUpdated == false then
   getrenv().GruopChecked = false
 end
 
