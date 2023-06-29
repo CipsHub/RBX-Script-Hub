@@ -179,8 +179,40 @@ game:GetService("UserInputService").InputBegan:Connect(function(input, isProcess
     end
 end)
 
-local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
-local Window = OrionLib:MakeWindow({IntroText = "Hi",Name = "c1ps Hub", HidePremium = true, SaveConfig = true, ConfigFolder = "c1ps Hub Config"})
+local id = game.PlaceId -- Game id
+local lp = game:GetService("Players").LocalPlayer -- gets client side player / local player
+local lpName = lp.Name
+local GruopChecked = nil
+local groupId = 16306842
+
+local function checkGroupMembership()
+    local success, result = pcall(function()
+        return lp:IsInGroup(groupId)
+    end)
+
+    if success then
+        if result then
+        local rank = lp:GetRankInGroup(groupId)
+	if rank == 1 then
+	local rankName = "Fan"
+	end
+        print("hey "..lpName.." we dedected that ur in gruop!")
+        print("User Name: "..lpName.." loading "..rankName.." script")
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/CipsHub/RBX-Script-Hub/main/Hub%20Loader/GruopCheck.lua"))()
+        GruopChecked = true
+            else
+            print("Ur not in the gruop!")
+            end
+            else
+            warn("Failed to check group membership:", result)
+    end
+end
+
+checkGroupMembership()
+
+if GruopChecked == nil then
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))() -- Gui source (orion gui)
+local Window = OrionLib:MakeWindow({IntroText = "Hi",Name = "c1ps Hub", HidePremium = true, SaveConfig = true, ConfigFolder = "c1ps Hub Config id: "..id}) -- Configs
 local Zort = game:GetService("Players").LocalPlayer
 
 getgenv().AntiAfk = false
@@ -445,3 +477,7 @@ SWTab:AddSlider({
 OrionLib:Init()
 
 task.wait(2)
+end
+
+print("c1ps Hub Loaded Config id: "..id)
+print("Hi "..lpName.." Welcome to c1ps Hub Beta")
