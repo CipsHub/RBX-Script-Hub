@@ -8,8 +8,14 @@ getgenv().Supported = nil
 --end
 
 if(id == 2609668898) then
-loadstring(game:HttpGet("https://raw.githubusercontent.com/CipsHub/RBX-Script-Hub/main/Games-Script-Hnadler/CustomDuels.lua", true))()
-getgenv().Supported = true
+  if getrenv().GEnabled == true then
+    print("Gruop Script Enabled")
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/CipsHub/RBX-Script-Hub/main/Games-Script-Hnadler/CustomDuels.lua", true))()
+  end
+  if getrenv().GEnabled == nil then
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/CipsHub/RBX-Script-Hub/main/Games-Script-Hnadler/CustomDuels.lua", true))()
+    getgenv().Supported = true
+  end
 end
 
 if(id == 12568963478) then
