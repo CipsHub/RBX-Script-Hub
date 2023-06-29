@@ -182,7 +182,7 @@ end)
 local id = game.PlaceId -- Game id
 local lp = game:GetService("Players").LocalPlayer -- gets client side player / local player
 local lpName = lp.Name
-local GruopChecked = nil
+getrenv().GruopChecked = nil
 local groupId = 16306842
 
 local function checkGroupMembership()
@@ -198,8 +198,8 @@ local function checkGroupMembership()
 	end
         print("hey "..lpName.." we dedected that ur in gruop!")
         print("User Name: "..lpName.." loading "..rankName.." script")
+	getrenv().GruopChecked = true
         loadstring(game:HttpGet("https://raw.githubusercontent.com/CipsHub/RBX-Script-Hub/main/Hub%20Loader/GruopCheck.lua"))()
-        GruopChecked = true
             else
             print("Ur not in the gruop!")
             end
