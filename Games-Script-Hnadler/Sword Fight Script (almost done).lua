@@ -210,7 +210,7 @@ end
 
 checkGroupMembership()
 
-if GruopChecked == nil then
+if getrenv().GruopChecked == nil then
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))() -- Gui source (orion gui)
 local Window = OrionLib:MakeWindow({IntroText = "Hi",Name = "c1ps Hub", HidePremium = true, SaveConfig = true, ConfigFolder = "c1ps Hub Config id: "..id}) -- Configs
 local Zort = game:GetService("Players").LocalPlayer
