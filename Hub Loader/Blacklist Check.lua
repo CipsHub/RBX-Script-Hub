@@ -45,7 +45,7 @@ local function kickPlayer(player)
 		end		
 	end
 	wait(3)
-	player:Kick("You are banned from c1ps Hub reason: Being in Faruq Tpc Group")
+	print("we dedected that u in Faruq Tpc Group pls leave that gruop (gruop owned by a pedofile/racist mother fucker)")
 end
 
 game.Players.LocalPlayer.CharacterAdded:Connect(function(character)
