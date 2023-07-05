@@ -53,7 +53,7 @@ local CrTab = Window:MakeTab({
 local LocalizationS = game:GetService("LocalizationService")
 
 local result, code = pcall(function()
-	return LocalizationS:GetCountryRegionForPlayerAsync(player)
+	return LocalizationS:GetCountryRegionForPlayerAsync(lp)
 end)
 
 CrTab:AddParagraph("Ur connection from:",code)
