@@ -50,7 +50,14 @@ local CrTab = Window:MakeTab({
 	PremiumOnly = false
 })
 
-CrTab:AddParagraph("Script made by!","c1ps") -- adds to Cr Tab and adds paragraph
+local LocalizationS = game:GetService("LocalizationService")
+
+local result, code = pcall(function()
+	return LocalizationS:GetCountryRegionForPlayerAsync(player)
+end)
+
+CrTab:AddParagraph("Ur connection from:",code)
+CrTab:AddParagraph("Script developers:","c1ps, urlevii") -- adds to Cr Tab and adds paragraph
 CrTab:AddParagraph("Our discord server:","c1ps Hub") -- adds to Cr Tab and adds paragraph
 
  -- makes Button
