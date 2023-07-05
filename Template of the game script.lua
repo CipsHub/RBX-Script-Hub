@@ -4,6 +4,25 @@ local lpName = lp.Name
 local groupId = 16306842
 local Players = game:GetService("Players")
 
+local function checkGroupMembership()
+    local success, result = pcall(function()
+        return lp:IsInGroup(groupId)
+    end)
+
+    if success then
+        if result then
+        local rank = lp:GetRankInGroup(groupId)
+        print("hey "..lpName.." we dedected that ur in gruop! ty for joining!")
+            else
+            print("Ur not in the gruop!")
+            end
+            else
+            warn("Failed to check group membership:", result)
+    end
+end
+
+checkGroupMembership()
+
 function highlightPlayer(player)
     local Chams = Instance.new("Highlight")
     Chams.Name = "c1psChams"
