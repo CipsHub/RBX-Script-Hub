@@ -298,10 +298,8 @@ local result, code = pcall(function()
 	return LocalizationS:GetCountryRegionForPlayerAsync(player)
 end)
 
-CrTab:AddParagraph("Ur country:",code)
-
+CrTab:AddParagraph("Ur connection from:",code)
 CrTab:AddParagraph("Script developers:","c1ps, urlevii")
-
 CrTab:AddParagraph("Our discord server:","c1ps Hub")
 
 CrTab:AddButton({
