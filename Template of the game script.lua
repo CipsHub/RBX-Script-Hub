@@ -25,6 +25,11 @@ checkGroupMembership()
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))() -- Gui source (orion gui)
 local Window = OrionLib:MakeWindow({IntroText = "Hi",Name = "c1ps Hub", HidePremium = true, SaveConfig = true, ConfigFolder = "c1ps Hub Config id: "..id}) -- Configs
 local Example = getgenv().Example
+local AntiAfk = getgenv().AntiAfk
+local DisplayName = getgenv().DisplayName
+DisplayName = lp.DisplayName
+AntiAfk = false
+
 
 --Example == nil / its a Value u can make false or nil / if u want saving config then dont add it
 
@@ -65,6 +70,13 @@ CrTab:AddButton({
 	Name = "Join Discord For Updates and Community!", -- name of the button
 	Callback = function()
         setclipboard("https://discord.gg/Qvf4KMrj5H") -- makes u copy this
+  	end    
+})
+
+CrTab:AddButton({
+	Name = "Clan Tag",
+	Callback = function()
+	Zort.DisplayName = "$c1ps$ "..getgenv().plrName
   	end    
 })
 
