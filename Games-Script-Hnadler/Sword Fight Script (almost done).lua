@@ -193,10 +193,7 @@ local function checkGroupMembership()
     if success then
         if result then
         local rank = lp:GetRankInGroup(groupId)
-        print("hey "..lpName.." we dedected that ur in gruop!")
-        print("User Name: "..lpName.." loading "..rank.." script")
-	getrenv().GruopChecked = true
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/CipsHub/RBX-Script-Hub/main/Hub%20Loader/GruopCheck.lua"))()
+        print("hey "..lpName.." we dedected that ur in gruop! ty")
             else
             print("Ur not in the gruop!")
             end
@@ -207,7 +204,6 @@ end
 
 checkGroupMembership()
 
-if getrenv().GruopChecked == nil then
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))() -- Gui source (orion gui)
 local Window = OrionLib:MakeWindow({IntroText = "Hi",Name = "c1ps Hub", HidePremium = true, SaveConfig = true, ConfigFolder = "c1ps Hub Config id: "..id}) -- Configs
 local Zort = game:GetService("Players").LocalPlayer
@@ -474,7 +470,6 @@ SWTab:AddSlider({
 OrionLib:Init()
 
 task.wait(2)
-end
 
 print("c1ps Hub Loaded Config id: "..id)
 print("Hi "..lpName.." Welcome to c1ps Hub Beta")
