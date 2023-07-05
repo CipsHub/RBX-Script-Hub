@@ -2,50 +2,113 @@ local id = game.PlaceId -- Game id
 local lp = game:GetService("Players").LocalPlayer -- gets client side player / local player
 local lpName = lp.Name
 local groupId = 16306842
+local Players = game:GetService("Players")
 
-local function checkGroupMembership()
-    local success, result = pcall(function()
-        return lp:IsInGroup(groupId)
+function highlightPlayer(player)
+    local Chams = Instance.new("Highlight")
+    Chams.Name = "c1psChams"
+    Chams.FillTransparency = 0
+    Chams.FillColor = Color3.new(1, 0.666667, 0)
+    Chams.OutlineColor = Color3.new(1, 0.333333, 1)
+    Chams.OutlineTransparency = 0
+    Chams.Parent = player.Character
+
+    local function updateChamsEnabled()
+        Chams.Enabled = getgenv().Chams
+    end
+
+    local function updateChamsDepthMode()
+        if getgenv().BypassWalls then
+            Chams.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+        else
+            Chams.DepthMode = Enum.HighlightDepthMode.Occluded
+        end
+    end
+
+    updateChamsEnabled()
+    updateChamsDepthMode()
+
+    player.CharacterAdded:Connect(function(character)
+        Chams.Parent = character
+        updateChamsEnabled()
+        updateChamsDepthMode()
     end)
+end
 
-    if success then
-        if result then
-        local rank = lp:GetRankInGroup(groupId)
-        print("hey "..lpName.." we dedected that ur in gruop! ty for joining!")
-            else
-            print("Ur not in the gruop!")
-            end
-            else
-            warn("Failed to check group membership:", result)
+Players.PlayerAdded:Connect(function(player)
+    if player ~= lp then
+        highlightPlayer(player)
+    end
+end)
+
+for _, player in ipairs(Players:GetPlayers()) do
+    if player ~= lp then
+        highlightPlayer(player)
     end
 end
 
-checkGroupMembership()
+local function onChamsChanged()
+    for _, player in ipairs(Players:GetPlayers()) do
+        if player.Character and player ~= lp then
+            local Chams = player.Character:FindFirstChild("c1psChams")
+            if Chams then
+                Chams.Enabled = getgenv().Chams
+                if getgenv().BypassWalls then
+                    Chams.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+                else
+                    Chams.DepthMode = Enum.HighlightDepthMode.Occluded
+                end
+            end
+        end
+    end
+end
+
+getgenv().ChamsChangedConn = getgenv().ChamsChangedConn or getgenv().ChamsChangedConn == nil and getgenv().ChamsChangedConn
+getgenv().BypassWallsChangedConn = getgenv().BypassWallsChangedConn or getgenv().BypassWallsChangedConn == nil and getgenv().BypassWallsChangedConn
+
+if getgenv().ChamsChangedConn then
+    getgenv().ChamsChangedConn:Disconnect()
+end
+
+if getgenv().BypassWallsChangedConn then
+    getgenv().BypassWallsChangedConn:Disconnect()
+end
+
+getgenv().ChamsChangedConn = game:GetService("RunService").Heartbeat:Connect(onChamsChanged)
+getgenv().BypassWallsChangedConn = game:GetService("RunService").Heartbeat:Connect(onChamsChanged)
 
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))() -- Gui source (orion gui)
 local Window = OrionLib:MakeWindow({IntroText = "Hi",Name = "c1ps Hub", HidePremium = true, SaveConfig = true, ConfigFolder = "c1ps Hub Config id: "..id}) -- Configs
-local Example = getgenv().Example
-local AntiAfk = getgenv().AntiAfk
-local DisplayName = getgenv().DisplayName
-DisplayName = lp.DisplayName
-AntiAfk = false
-
+getgenv().DisplayName = lp.DisplayName
+getgenv().AntiAfk = true
+getgenv().BypassWalls = true
+getgenv().Chams = false
 
 --Example == nil / its a Value u can make false or nil / if u want saving config then dont add it
-
--- Functionlar
-function FExample() -- function name
-    while Example == true do -- value check and decides what happens when true
-      print("u activated function") -- prints when true
-      wait(1) -- put how much u want wait
-  end
+function Chams()
+    while getgenv().Chams == true do
+        print("c1ps Hub: Chams Enabled")
+        wait(99999999999999999999999999999)
+    end
 end
 
+function BypassWalls()
+    while getgenv().BypassWalls == true do
+        print("c1ps Hub: Chams BypassWalls Enabled")
+        wait(99999999999999999999999999999)
+    end
+end
 -- tabs / Makes FarmTab
 local FarmTab = Window:MakeTab({ -- creates tab
 	Name = "Farm", -- name of tab
 	Icon = "rbxassetid://4483345998", -- icon of the tab
 	PremiumOnly = false -- premium check
+})
+
+local ViTab = Window:MakeTab({
+	Name = "Visuals",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
 })
 
 -- Makes CrTab
@@ -81,12 +144,21 @@ CrTab:AddButton({
 })
 
 -- makes Toggle Button
-FarmTab:AddToggle({ -- adds to Farm Tab and makes toggle button
-	Name = "Example Button", -- name of the toggle button
+ViTab:AddToggle({ -- adds to Vi Tab and makes toggle button
+	Name = "Chams Wall Bypass", -- name of the toggle button
 	Default = false, -- when gui opened makes it false
 	Callback = function(Value) -- finds function
-	Example = Value -- The Value of function and state
-    FExample() -- Function name
+	getgenv().BypassWalls = Value -- The Value of function and state
+    BypassWalls()
+end
+})
+-- makes Toggle Button
+ViTab:AddToggle({ -- adds to Vi Tab and makes toggle button
+	Name = "Chams", -- name of the toggle button
+	Default = false, -- when gui opened makes it false
+	Callback = function(Value) -- finds function
+	getgenv().Chams = Value -- The Value of function and state
+    Chams()
 end
 })
 
