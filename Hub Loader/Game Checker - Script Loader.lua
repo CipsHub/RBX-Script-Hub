@@ -37,6 +37,11 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/CipsHub/RBX-Script-Hu
 getgenv().Supported = true
 end
 
+if(id == 10857807258) then
+loadstring(game:HttpGet("https://raw.githubusercontent.com/CipsHub/RBX-Script-Hub/main/Games-Script-Hnadler/Boxing%20Friends%20Simulator.lua", true))()
+getgenv().Supported = true
+end
+
 if getgenv().Supported == nil then
 loadstring(game:HttpGet("https://raw.githubusercontent.com/CipsHub/RBX-Script-Hub/main/Games-Script-Hnadler/Sword%20Fight%20Script%20(almost%20done).lua", true))()
 end
