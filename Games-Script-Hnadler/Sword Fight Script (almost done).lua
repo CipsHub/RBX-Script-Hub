@@ -11,11 +11,12 @@ getgenv().teleportKey = Enum.KeyCode.T -- Adjust this key to your desired telepo
 getgenv().modifyToolKey = Enum.KeyCode.F -- Adjust this key to your desired modify tool key
 
 getgenv().TPDistance = 4
-
+getgenv().WiggleMode = "Right"
 getgenv().ReachSizeY = 30
 getgenv().ReachSizeX = 30
 getgenv().ReachSizeZ = 30
 getgenv().ReachType = "Enum.PartType.Ball"
+
 
 -- Reach types --
 
@@ -73,6 +74,27 @@ local function updateLookDirection()
         if closestPart then
             local lookVector = (closestPart.Position - playerPosition).Unit
             lookVector = Vector3.new(lookVector.X, 0, lookVector.Z).Unit
+            local XVector, ZVector
+            if getgenv().WiggleMode == "Right" then
+                XVector = 0
+                ZVector = 1
+            elseif getgenv().WiggleMode == "Left" then
+                XVector = 1
+                ZVector = 0
+            elseif getgenv().WiggleMode == "Both" then
+                XVector = 1
+                ZVector = 1
+            else
+                XVector = 0
+                ZVector = 0
+            end
+            if getgenv().Wiggle then
+                lookVector = Vector3.new(
+                    lookVector.X + math.random(-XVector, XVector),
+                    0,
+                    lookVector.Z + math.random(-ZVector, ZVector)
+                ).Unit
+            end
             local lookRotation = CFrame.lookAt(Vector3.new(), lookVector)
             character.HumanoidRootPart.CFrame = CFrame.new(playerPosition) * lookRotation
 
@@ -93,8 +115,14 @@ local function updateLookDirection()
             end
             
             -- Check if the teleport key is pressed and teleport behind the target
-            if game:GetService("UserInputService"):IsKeyDown(getgenv().teleportKey) then
+            if game:GetService("UserInputService"):IsKeyDown(getgenv().teleportKey) then    
                 local teleportOffset = getgenv().TPDistance -- Adjust this value to control the distance of the teleport
+
+            if getgenv().randomizeTeleport then
+                getgenv().randomness = 2  -- Adjust this value to control the amount of randomness
+                teleportOffset = teleportOffset + math.random(-randomness, randomness)
+            end
+
                 local teleportPosition = closestPart.Position - closestPart.CFrame.LookVector * teleportOffset
 
                 -- Set the character's look direction towards the target
@@ -211,6 +239,8 @@ local Zort = game:GetService("Players").LocalPlayer
 getgenv().AntiAfk = false
 getgenv().plrName = Zort.DisplayName
 getgenv().ClanTag = false
+getgenv().randomizeTeleport = false
+getgenv().Wiggle = false 
 
 function AntiAfk()
     while getgenv().AntiAfk == true do
@@ -259,6 +289,20 @@ end
 function InfJump()
     while getgenv().InfJump == true do
 print("Cips Hub: enabled inf jump")
+wait(999999999999999999999999999999999999999999999999999999999999999999999999999)
+end
+end
+
+function Wiggle()
+    while getgenv().Wiggle == true do
+print("Cips Hub: enabled Wiggle")
+wait(999999999999999999999999999999999999999999999999999999999999999999999999999)
+end
+end
+
+function randomizeTeleport()
+    while getgenv().randomizeTeleport == true do
+print("Cips Hub:  enabled Bang Teleport")
 wait(999999999999999999999999999999999999999999999999999999999999999999999999999)
 end
 end
@@ -326,11 +370,29 @@ InfJump()
 })
 
 SWTab:AddToggle({
+	Name = "Auto Wiggle",
+	Default = false,
+	Callback = function(Value)
+		getgenv().Wiggle = Value 
+		Wiggle() 
+    end
+})
+
+SWTab:AddToggle({
 	Name = "Auto Swing",
 	Default = false,
 	Callback = function(Value)
 		getgenv().autoActivateToolEnabled = Value 
 		autoActivateToolEnabled() 
+    end
+})
+
+SWTab:AddToggle({
+	Name = "Bang Teleport",
+	Default = false,
+	Callback = function(Value)
+		getgenv().randomizeTeleport = Value 
+		randomizeTeleport() 
     end
 })
 
@@ -352,6 +414,15 @@ PlayerTab:AddSlider({
 	Increment = 1,
 	Callback = function(Value)
 		TargetWalkspeed = Value
+	end    
+})
+
+SWTab:AddDropdown({
+	Name = "Select Wiggle Mode",
+	Default = "Right",
+	Options = {"Left", "Right", "Both"},
+	Callback = function(Value)
+		getgenv().WiggleMode = Value
 	end    
 })
 
