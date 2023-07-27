@@ -1,6 +1,6 @@
 -- Obtain the player's character
 local player = game.Players.LocalPlayer
-local character
+local character = player.Character
 
 -- Define the maximum range distance for looking at other players
 getgenv().maxRange = 20 -- Adjust this value to your desired maximum range
@@ -9,7 +9,7 @@ getgenv().maxRange = 20 -- Adjust this value to your desired maximum range
 getgenv().ToggleKey1 = Enum.KeyCode.R -- Adjust this key to your desired toggle key
 getgenv().teleportKey = Enum.KeyCode.T -- Adjust this key to your desired teleport key
 getgenv().modifyToolKey = Enum.KeyCode.F -- Adjust this key to your desired modify tool key
-
+getgenv().KillAuraKey = Enum.KeyCode.P
 getgenv().TPDistance = 4
 getgenv().WiggleMode = "Right"
 getgenv().ReachSizeY = 30
@@ -197,6 +197,84 @@ local function onModifyToolKeyPressed()
         end
     end
 end
+
+local printTargetPartsEnabled = false
+
+local function togglePrintTargetParts()
+    printTargetPartsEnabled = not printTargetPartsEnabled
+    if printTargetPartsEnabled then
+        onPrintTargetParts()
+    else
+        print("Target Character Model Parts: OFF")
+    end
+end
+
+game:GetService("UserInputService").InputBegan:Connect(function(input, isProcessed)
+    if not isProcessed then
+        if input.KeyCode == getgenv().KillAuraKey then -- Use any key you like here
+            togglePrintTargetParts()
+        end
+    end
+end)
+
+-- Function to print target parts
+local function onPrintTargetParts()
+    if character and toggleEnabled then
+        -- Get all character models in the game within the range
+        local characterModels = {}
+        local playerPosition = character.HumanoidRootPart.Position
+        for _, otherPlayer in ipairs(game.Players:GetPlayers()) do
+            if otherPlayer ~= player and otherPlayer.Character then
+                local distance = (otherPlayer.Character.HumanoidRootPart.Position - playerPosition).Magnitude
+                if distance <= getgenv().maxRange then
+                    table.insert(characterModels, otherPlayer.Character)
+                end
+            end
+        end
+
+        -- Find the closest character model with a living Humanoid
+        local closestCharacterModel = nil
+        local closestDistance = math.huge
+        for _, characterModel in ipairs(characterModels) do
+            local distance = (characterModel.HumanoidRootPart.Position - playerPosition).Magnitude
+            if distance < closestDistance then
+                local humanoid = characterModel:FindFirstChild("Humanoid")
+                if humanoid and humanoid.Health > 0 then
+                    closestCharacterModel = characterModel
+                    closestDistance = distance
+                end
+            end
+        end
+
+        -- Print the parts of the closest character model (only if they are of class "Part")
+       if closestCharacterModel then
+            print("Target Character Model Parts:")
+            local function printModelPartsWithParents(model)
+                for _, part in ipairs(model:GetDescendants()) do
+                    if part:IsA("BasePart") then
+                        local parent = part.Parent
+                        if parent:IsA("Model") and parent.Name ~= player.Name then
+                            firetouchinterest(character:FindFirstChildOfClass("Tool"):FindFirstChild("Handle"),part,1)
+                            firetouchinterest(character:FindFirstChildOfClass("Tool"):FindFirstChild("Handle"),part,0)
+                        end
+                    end
+                end
+            end
+
+            
+            local success, err = pcall(printModelPartsWithParents, closestCharacterModel)
+            if not success then
+                warn("Error occurred while printing target parts:", err)
+            end
+        end
+    end
+end
+
+runService.Heartbeat:Connect(function()
+    if printTargetPartsEnabled then
+        onPrintTargetParts()
+    end
+end)
 
 -- Connect the modify tool function to the modify tool key press event
 game:GetService("UserInputService").InputBegan:Connect(function(input, isProcessed)
@@ -432,6 +510,15 @@ SWTab:AddTextbox({
 	TextDisappear = false,
 	Callback = function(Value)
 		getgenv().ToggleKey1 = Enum.KeyCode[Value]
+	end	  
+})
+
+SWTab:AddTextbox({
+	Name = "Kill Aura",
+	Default = "P",
+	TextDisappear = false,
+	Callback = function(Value)
+		getgenv().KillAuraKey = Enum.KeyCode[Value]
 	end	  
 })
 
