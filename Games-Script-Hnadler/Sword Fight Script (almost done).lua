@@ -40,27 +40,33 @@ highlightPart.TopSurface = Enum.SurfaceType.Smooth
 highlightPart.BottomSurface = Enum.SurfaceType.Smooth
 highlightPart.Parent = workspace
 
--- Define the function to update the player's look direction
+local targetParts = { "HumanoidRootPart", "Torso", "Left Arm", "Right Arm" } -- Add more part names if needed
+
 local function updateLookDirection()
     if character and toggleEnabled then
-        -- Get all HumanoidRootPart instances in the game within the range
-        local humanoidRootParts = {}
+        -- Get all target parts in the game within the range
+        local targetPartsList = {}
         local playerPosition = character.HumanoidRootPart.Position
         for _, otherPlayer in ipairs(game.Players:GetPlayers()) do
-            if otherPlayer ~= player and otherPlayer.Character and otherPlayer.Character:FindFirstChild("HumanoidRootPart") then
-                local part = otherPlayer.Character.HumanoidRootPart
-                local distance = (part.Position - playerPosition).Magnitude
-                if distance <= getgenv().maxRange then
-                    table.insert(humanoidRootParts, part)
+            if otherPlayer ~= player and otherPlayer.Character then
+                for _, partName in ipairs(targetParts) do
+                    local part = otherPlayer.Character:FindFirstChild(partName)
+                    if part then
+                        local distance = (part.Position - playerPosition).Magnitude
+                        if distance <= getgenv().maxRange then
+                            table.insert(targetPartsList, { Part = part, Distance = distance })
+                        end
+                    end
                 end
             end
         end
 
-        -- Find the closest HumanoidRootPart with a living Humanoid
+        -- Find the closest part with a living Humanoid
         local closestPart = nil
         local closestDistance = math.huge
-        for _, part in ipairs(humanoidRootParts) do
-            local distance = (part.Position - playerPosition).Magnitude
+        for _, entry in ipairs(targetPartsList) do
+            local part = entry.Part
+            local distance = entry.Distance
             if distance < closestDistance then
                 local humanoid = part.Parent:FindFirstChild("Humanoid")
                 if humanoid and humanoid.Health > 0 then
