@@ -40,7 +40,7 @@ highlightPart.TopSurface = Enum.SurfaceType.Smooth
 highlightPart.BottomSurface = Enum.SurfaceType.Smooth
 highlightPart.Parent = workspace
 
-local targetParts = { "Torso" } -- Add more part names if needed
+local targetParts = { "HumanoidRootPart" } -- Add more part names if needed
 
 local function updateLookDirection()
     if character and toggleEnabled then
