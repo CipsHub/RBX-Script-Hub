@@ -10,13 +10,13 @@ getgenv().ToggleKey1 = Enum.KeyCode.R -- Adjust this key to your desired toggle 
 getgenv().teleportKey = Enum.KeyCode.T -- Adjust this key to your desired teleport key
 getgenv().modifyToolKey = Enum.KeyCode.F -- Adjust this key to your desired modify tool key
 getgenv().KillAuraKey = Enum.KeyCode.P
+getgenv().Autowalkkey1 = Enum.KeyCode.K
 getgenv().TPDistance = 4
 getgenv().WiggleMode = "Right"
 getgenv().ReachSizeY = 30
 getgenv().ReachSizeX = 30
 getgenv().ReachSizeZ = 30
 getgenv().ReachType = "Enum.PartType.Ball"
-
 
 -- Reach types --
 
@@ -40,7 +40,7 @@ highlightPart.TopSurface = Enum.SurfaceType.Smooth
 highlightPart.BottomSurface = Enum.SurfaceType.Smooth
 highlightPart.Parent = workspace
 
-local targetParts = { "HumanoidRootPart", "Torso", "Left Arm", "Right Arm" } -- Add more part names if needed
+local targetParts = { "Torso" } -- Add more part names if needed
 
 local function updateLookDirection()
     if character and toggleEnabled then
@@ -291,6 +291,60 @@ game:GetService("UserInputService").InputBegan:Connect(function(input, isProcess
     end
 end)
 
+local function onAutoWalkKeyPressed()
+    getgenv().autoWalkEnabled = not getgenv().autoWalkEnabled
+end
+
+-- Connect the auto walk function to the auto walk key press event
+game:GetService("UserInputService").InputBegan:Connect(function(input, isProcessed)
+    if not isProcessed then
+        if input.KeyCode == getgenv().Autowalkkey1 then
+            onAutoWalkKeyPressed()
+        end
+    end
+end)
+
+local function autoWalkToTarget()
+    if character and toggleEnabled and getgenv().autoWalkEnabled then
+        -- Get the closest part with a living Humanoid
+        local closestPart = nil
+        local closestDistance = math.huge
+        local playerPosition = character.HumanoidRootPart.Position
+
+        for _, otherPlayer in ipairs(game.Players:GetPlayers()) do
+            if otherPlayer ~= player and otherPlayer.Character then
+                for _, partName in ipairs(targetParts) do
+                    local part = otherPlayer.Character:FindFirstChild(partName)
+                    if part then
+                        local distance = (part.Position - playerPosition).Magnitude
+                        if distance <= getgenv().maxRange and distance < closestDistance then
+                            local humanoid = part.Parent:FindFirstChild("Humanoid")
+                            if humanoid and humanoid.Health > 0 then
+                                closestPart = part
+                                closestDistance = distance
+                            end
+                        end
+                    end
+                end
+            end
+        end
+
+        -- Update the player's position to move towards the target if the player is looking at it
+        if closestPart then
+            local targetPosition = closestPart.Position
+
+            -- Move the player's humanoid to the targeted part's position
+            character.Humanoid:MoveTo(targetPosition)
+        else
+            -- There is no target, so stop auto walking
+            character.Humanoid:MoveTo(playerPosition)
+        end
+    end
+end
+
+
+runService.Heartbeat:Connect(autoWalkToTarget)
+
 local id = game.PlaceId -- Game id
 local lp = game:GetService("Players").LocalPlayer -- gets client side player / local player
 local lpName = lp.Name
@@ -525,6 +579,15 @@ SWTab:AddTextbox({
 	TextDisappear = false,
 	Callback = function(Value)
 		getgenv().KillAuraKey = Enum.KeyCode[Value]
+	end	  
+})
+
+SWTab:AddTextbox({
+	Name = "Auto Walk To Target",
+	Default = "K",
+	TextDisappear = false,
+	Callback = function(Value)
+		getgenv().Autowalkkey1 = Enum.KeyCode[Value]
 	end	  
 })
 
