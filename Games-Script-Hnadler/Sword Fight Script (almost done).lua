@@ -118,6 +118,7 @@ local function updateLookDirection()
 
             if tool2 and getgenv().autoActivateToolEnabled then
                 tool2:Activate()
+                tool2:Activate()
             end
             
             -- Check if the teleport key is pressed and teleport behind the target
@@ -549,7 +550,7 @@ PlayerTab:AddSlider({
 	Max = 200,
 	Default = 0,
 	Color = Color3.fromRGB(255,255,255),
-	Increment = 1,
+	Increment = 0.1,
 	Callback = function(Value)
 		TargetWalkspeed = Value
 	end    
@@ -612,10 +613,10 @@ SWTab:AddTextbox({
 SWTab:AddSlider({
 	Name = "Aimbot Distance",
 	Min = 0,
-	Max = 50,
+	Max = 500,
 	Default = 20,
 	Color = Color3.fromRGB(255,255,255),
-	Increment = 1,
+	Increment = 0.1,
 	Callback = function(Value)
 		getgenv().maxRange = Value
 	end    
@@ -627,7 +628,7 @@ SWTab:AddSlider({
 	Max = 50,
 	Default = 30,
 	Color = Color3.fromRGB(255,255,255),
-	Increment = 1,
+	Increment = 0.1,
 	Callback = function(Value)
 		getgenv().ReachSizeX = Value
 	end    
@@ -639,7 +640,7 @@ SWTab:AddSlider({
 	Max = 50,
 	Default = 30,
 	Color = Color3.fromRGB(255,255,255),
-	Increment = 1,
+	Increment = 0.1,
 	Callback = function(Value)
 		getgenv().ReachSizeY = Value
 	end    
@@ -651,7 +652,7 @@ SWTab:AddSlider({
 	Max = 50,
 	Default = 30,
 	Color = Color3.fromRGB(255,255,255),
-	Increment = 1,
+	Increment = 0.1,
 	Callback = function(Value)
 		getgenv().ReachSizeZ = Value
 	end    
@@ -669,7 +670,7 @@ SWTab:AddDropdown({
 SWTab:AddSlider({
 	Name = "Teleport Distance",
 	Min = 0,
-	Max = 10,
+	Max = 20,
 	Default = 4,
 	Color = Color3.fromRGB(255,255,255),
 	Increment = 1,
