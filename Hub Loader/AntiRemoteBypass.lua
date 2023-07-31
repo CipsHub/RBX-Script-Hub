@@ -1,6 +1,6 @@
 local id = game.PlaceId
 
-
+if(id == 12004201923) then
 local remotesFolder = game:GetService("ReplicatedStorage").Communication.Events
 
 local function renameRemote(remote, newName)
@@ -60,11 +60,11 @@ local remoteNames = {
     "c1psRemoteBypassTest48",
     "c1psRemoteBypassTest49",
     "c1psRemoteBypassTest50",
-    "CollectCoin",
+    "c1psRemoteBypassTest51",
     "c1psRemoteBypassTest52",
     "c1psRemoteBypassTest53",
     "c1psRemoteBypassTest54",
-    "c1psRemoteBypassTest55",
+    "CollectCoin",
     "c1psRemoteBypassTest56",
     "c1psRemoteBypassTest57",
     "c1psRemoteBypassTest58",
