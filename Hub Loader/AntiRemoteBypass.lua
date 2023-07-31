@@ -1,6 +1,6 @@
 local id = game.PlaceId
 
-if(id == 2609668898) then
+
 local remotesFolder = game:GetService("ReplicatedStorage").Communication.Events
 
 local function renameRemote(remote, newName)
@@ -157,5 +157,4 @@ local functionNames = {
 for i, func in ipairs(functions) do
     local newName = functionNames[i] or "RemoteBulunmadi!"
     renameFunction(func, newName)
-end
 end
