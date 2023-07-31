@@ -158,3 +158,4 @@ for i, func in ipairs(functions) do
     local newName = functionNames[i] or "RemoteBulunmadi!"
     renameFunction(func, newName)
 end
+end
