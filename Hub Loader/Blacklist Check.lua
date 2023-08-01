@@ -75,4 +75,4 @@ local function checkGroupMembership()
 	end
 end
 
-checkGroupMembership()
+--checkGroupMembership()
