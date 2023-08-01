@@ -7,6 +7,11 @@ getgenv().Supported = nil
 --getgenv().Supported = true
 --end
 
+if(id == 12004201923) then
+loadstring(game:HttpGet("https://raw.githubusercontent.com/CipsHub/RBX-Script-Hub/main/Games-Script-Hnadler/ChestSimulator.lua", true))()
+getgenv().Supported = true
+end
+
 if(id == 2609668898) then
 loadstring(game:HttpGet("https://raw.githubusercontent.com/CipsHub/RBX-Script-Hub/main/Games-Script-Hnadler/CustomDuels.lua", true))()
 getgenv().Supported = true
