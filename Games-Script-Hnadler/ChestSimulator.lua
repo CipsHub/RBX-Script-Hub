@@ -310,20 +310,13 @@ end)
 
 CrTab:AddParagraph("Ur connection from:",code)
 CrTab:AddParagraph("Script developers:","c1ps") -- adds to Cr Tab and adds paragraph
-CrTab:AddParagraph("Our discord server:","c1ps Hub") -- adds to Cr Tab and adds paragraph
+CrTab:AddParagraph("Our discord server:","c1ps Hub V2") -- adds to Cr Tab and adds paragraph
 
  -- makes Button
 CrTab:AddButton({
 	Name = "Join Discord For Updates and Community!", -- name of the button
 	Callback = function()
         setclipboard("https://discord.gg/Qvf4KMrj5H") -- makes u copy this
-  	end    
-})
-
-CrTab:AddButton({
-	Name = "Clan Tag",
-	Callback = function()
-	Zort.DisplayName = "$c1ps$ "..getgenv().plrName
   	end    
 })
 
