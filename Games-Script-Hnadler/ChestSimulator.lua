@@ -112,7 +112,7 @@ function AutoCollectOrbs()
         for i, v in pairs(workspace.Orbs:GetDescendants()) do
             if v:IsA("Part") then
                 v.Size = Vector3.new(120, 120, 120)
-                wait(0.1)
+                wait(0.4)
             end
         end
     end
@@ -210,7 +210,7 @@ AutoHatch()
 FarmTab:AddSlider({
 	Name = "Chest Nuker Range",
 	Min = 0,
-	Max = 200,
+	Max = 40,
 	Default = 20,
 	Color = Color3.fromRGB(255,255,255),
 	Increment = 0.1,
