@@ -1,7 +1,5 @@
 local id = game.PlaceId
 
-getgenv().Supported = nil
-
 --if(id == "id Here") then
 --loadstring(game:HttpGet("script raw", true))()
 --getgenv().Supported = true
