@@ -210,8 +210,8 @@ AutoHatch()
 FarmTab:AddSlider({
 	Name = "Chest Nuker Range",
 	Min = 0,
-	Max = 40,
-	Default = 20,
+	Max = 20,
+	Default = 15,
 	Color = Color3.fromRGB(255,255,255),
 	Increment = 0.1,
 	Callback = function(Value)
