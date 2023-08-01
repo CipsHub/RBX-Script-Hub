@@ -1,4 +1,4 @@
-local blacklist = {
+--[[local blacklist = {
     552716190,
     4020587829,
     2887293505
@@ -75,4 +75,5 @@ local function checkGroupMembership()
 	end
 end
 
---checkGroupMembership()
+checkGroupMembership()
+--]]
