@@ -112,7 +112,7 @@ function AutoCollectOrbs()
         for i, v in pairs(workspace.Orbs:GetDescendants()) do
             if v:IsA("Part") then
                 v.Size = Vector3.new(120, 120, 120)
-                wait(0.4)
+                wait()
             end
         end
     end
