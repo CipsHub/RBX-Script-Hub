@@ -81,8 +81,8 @@ local function findNearestHitbox()
     return nearestHitbox, nearestDistance
 end
 
-game:GetService("RunService").Heartbeat:Connect(function()
 
+while wait(0.1) getgenv().CoinNuker do
     local nearestHitbox, nearestDistance = findNearestHitbox()
 
     if nearestHitbox then
@@ -92,9 +92,10 @@ game:GetService("RunService").Heartbeat:Connect(function()
         if idValue and getgenv().CoinNuker then
             game:GetService("ReplicatedStorage").Communication.Events.c1psRemoteBypassTest11:FireServer(idValue, nil, 5, 1)
             wait(0.1)
+	end
         end
-    end   
-end)
+    end
+end
 
 function AutoHatch()
     while getgenv().AutoHatch == true do
