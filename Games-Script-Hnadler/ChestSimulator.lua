@@ -81,22 +81,6 @@ local function findNearestHitbox()
     return nearestHitbox, nearestDistance
 end
 
-
-while wait(0.1) getgenv().CoinNuker do
-    local nearestHitbox, nearestDistance = findNearestHitbox()
-
-    if nearestHitbox then
-        local attributes = nearestHitbox.Parent:GetAttributes()
-        local idValue = attributes.Id
-
-        if idValue and getgenv().CoinNuker then
-            game:GetService("ReplicatedStorage").Communication.Events.c1psRemoteBypassTest11:FireServer(idValue, nil, 5, 1)
-            wait(0.1)
-	end
-        end
-    end
-end
-
 function AutoHatch()
     while getgenv().AutoHatch == true do
 local ohString1 = getgenv().SelectEgg
@@ -156,8 +140,17 @@ end
 
 function CoinNuker()
     while getgenv().CoinNuker == true do
-    print("Nuking Chests With c1ps Hub v2")
-    wait(20)
+        local nearestHitbox, nearestDistance = findNearestHitbox()
+
+        if nearestHitbox then
+            local attributes = nearestHitbox.Parent:GetAttributes()
+            local idValue = attributes.Id
+
+            if idValue and getgenv().CoinNuker then
+                game:GetService("ReplicatedStorage").Communication.Events.c1psRemoteBypassTest11:FireServer(idValue, nil, 5, 1)
+                wait(0.1)
+	        end
+        end
     end
 end
 
