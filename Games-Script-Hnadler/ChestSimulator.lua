@@ -148,7 +148,7 @@ function CoinNuker()
 
             if idValue and getgenv().CoinNuker then
                 game:GetService("ReplicatedStorage").Communication.Events.c1psRemoteBypassTest11:FireServer(idValue, nil, 5, 1)
-                wait(0.1)
+                wait()
 	        end
         end
     end
