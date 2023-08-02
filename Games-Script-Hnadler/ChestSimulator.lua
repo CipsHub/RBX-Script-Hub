@@ -186,7 +186,7 @@ local EggTab = Window:MakeTab({ -- creates tab
 EggTab:AddDropdown({
 	Name = "Select egg",
 	Default = "Basic",
-	Options = {"Basic", "BasicGolden", "Beach", "Candy", "Circus", "Coral", "CoveEgg"},
+	Options = {"Basic", "BasicGolden", "Beach", "Candy", "Circus", "Coral", "CoveEgg", "Crab", "Crystal", "Cyber", "Desert", "Eel", "Event20M", "Farm", "Fish", "Glaciar", "Glitch", "Hacker", "Heaven", "Jungle", "Magma", "Melon", "Neo", "Nuclear", "Octopus", "Penguin", "Pirate", "SandCastle", "Shark", "Steampunk", "SummerSpawn", "TechLab", "Tiki", "Toy", "Volcano", "Winter"},
 	Callback = function(Value)
     getgenv().SelectEgg = Value
 	end    
