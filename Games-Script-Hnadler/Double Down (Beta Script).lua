@@ -174,25 +174,38 @@ getgenv().ClanTag = false
 getgenv().AutoSpin = false
 getgenv().Plinko = false
 getgenv().ACD = false
+getgenv().AutoPlay = false
+getgenv().GameName = nil
+getgenv().Price = nil
+getgenv().AssetType1 = nil
+getgenv().assetId1 = nil
+getgenv().BlockDrop = nil
+local anticheatFolder = workspace[Zort.Name]:FindFirstChild("FJsMovementAnticheat")
 
 --function lar
 
 function Plinko()
     while getgenv().Plinko == true do
-for i, v in pairs(game:GetService("Workspace").ArenasREAL:GetDescendants()) do
-	if v:IsA("Part") then
+for i, v in pairs(workspace:FindFirstChild("ArenasREAL"):GetDescendants()) do
+    if v.ClassName == "Part" then
 	if v.Name == "HitGreen" then
-v.Size = Vector3.new(1, 20, 20)
-v.Transparency = 1
-wait(1.5)
+game:GetService("VirtualInputManager"):SendMouseButtonEvent(750, 730, 0, true, game, 1)
+game:GetService("VirtualInputManager"):SendMouseButtonEvent(750, 730, 0, false, game, 1)
+wait(.3)
+end
+else
+print("Player Not in game yet!")
 end
 end
 end
 end
+
+function BlockDrop()
+    while getgenv().BlockDrop == true do
+-- not done yet
 end
-    
-    
-    
+end 
+
 function AutoSpin()
     while getgenv().AutoSpin == true do
 game:GetService("ReplicatedStorage").RemoteCalls.GameSpecific.DailySpinner.ClaimDailySpinner:InvokeServer()
@@ -202,8 +215,18 @@ wait(.3)
 end
 end
 
-
-
+function AutoPlay()
+    while getgenv().AutoPlay == true do
+local GameGameNam3 = getgenv().GameName
+local Price = getgenv().Price
+local ItemToSold = {
+	["assetType"] = getgenv().AssetType1,
+	["assetId"] = getgenv().assetId1
+}
+local ohBoolean4 = false
+game:GetService("ReplicatedStorage").RemoteCalls.GameSpecific.Tickets.CreateRoom:InvokeServer(GameGameNam3, Price, ItemToSold, ohBoolean4)
+end
+end
 
 function AntiAfk()
     while getgenv().AntiAfk == true do
@@ -235,11 +258,21 @@ game:GetService("RunService").RenderStepped:Connect(function()
         end
     end)
 end)
---function auto
+
 function ACD()
     while getgenv().ACD == true do
-    workspace[Zort.Name].FJsMovementAnticheat:destroy()
-    wait()
+    local character = Zort.Character        
+        if character then
+            local anticheatFolder = character:FindFirstChild("FJsMovementAnticheat")            
+            if anticheatFolder then
+                anticheatFolder:Destroy()
+                wait()
+            else
+                print("Disabled Anticheat")
+                wait(.5)
+            end
+        end        
+        wait()
     end
 end
 
@@ -257,7 +290,7 @@ end
 function InfJump()
     while getgenv().InfJump == true do
 print("Cips Hub: enabled inf jump")
-wait(math.huge)
+wait(9e99)
 end
 end
 
@@ -266,6 +299,11 @@ UserInputService.JumpRequest:Connect(checkJump)
 --menü
 local FarmTab = Window:MakeTab({
 	Name = "Farm",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+local AUTab = Window:MakeTab({
+	Name = "AU Create Match",
 	Icon = "rbxassetid://4483345998",
 	PremiumOnly = false
 })
@@ -289,8 +327,8 @@ local CrTab = Window:MakeTab({
 	Icon = "rbxassetid://4483345998",
 	PremiumOnly = false
 })
-CrTab:AddParagraph("Script made by!","Cips#9611")
-CrTab:AddParagraph("Our discord server:","Cips Hub")
+CrTab:AddParagraph("Script made by!","c1ps")
+CrTab:AddParagraph("Our discord server:","c1ps Hub v2")
 CrTab:AddButton({
 	Name = "Join Discord For Updates and Community!",
 	Callback = function()
@@ -303,12 +341,60 @@ CrTab:AddButton({
 Zort.DisplayName = "$Cips$ "..getgenv().plrName
   	end    
 })
+FarmTab:AddToggle({
+	Name = "Auto Win Block Drop",
+	Default = false,
+	Callback = function(Value)
+		getgenv().BlockDrop = Value 
+BlockDrop() 
+    end
+})
 SWTab:AddToggle({
 	Name = "Inf Jump",
 	Default = false,
 	Callback = function(Value)
 		getgenv().InfJump = Value 
 InfJump() 
+    end
+})
+AUTab:AddDropdown({
+	Name = "Select Game",
+	Default = "BlockDrop",
+	Options = {"BlockDrop", "Plinko"},
+	Callback = function(Value)
+    getgenv().GameName = Value
+	end    
+})
+AUTab:AddTextbox({
+	Name = "AssetID",
+	Default = "",
+	TextDisappear = false,
+	Callback = function(Value)
+		getgenv().assetId1 = Value
+	end	  
+})
+AUTab:AddDropdown({
+	Name = "AssetType",
+	Default = "Shirt",
+	Options = {"Shirt", "Gamepass"},
+	Callback = function(Value)
+    getgenv().AssetType1 = Value
+	end    
+})
+AUTab:AddTextbox({
+	Name = "Price",
+	Default = "",
+	TextDisappear = false,
+	Callback = function(Value)
+		getgenv().Price = Value
+	end	  
+})
+AUTab:AddToggle({
+	Name = "Auto Play",
+	Default = false,
+	Callback = function(Value)
+		getgenv().AutoPlay = Value 
+AutoPlay() 
     end
 })
 FarmTab:AddButton({
@@ -338,7 +424,7 @@ AntiAfk()
     end
 })
 FarmTab:AddToggle({
-	Name = "Auto Spin",
+	Name = "Auto Spin (Not Updated)",
 	Default = false,
 	Callback = function(Value)
 		getgenv().AutoSpin = Value 
@@ -346,14 +432,14 @@ AutoSpin()
     end
 })
 FarmTab:AddToggle({
-	Name = "Plinko %100 hit rate",
+	Name = "Plinko Auto Play",
 	Default = false,
 	Callback = function(Value)
 		getgenv().Plinko = Value 
 Plinko() 
     end
 })
---buton
+
 CodesTab:AddButton({
 	Name = "Rodrig50",
 	Callback = function()
@@ -362,6 +448,7 @@ local ohString1 = "rodrig50"
 game:GetService("ReplicatedStorage").RemoteCalls.GameSpecific.Settings.EnterCode:InvokeServer(ohString1)
 end
 })
+
 CodesTab:AddButton({
 	Name = "Vrozix",
 	Callback = function()
@@ -370,6 +457,7 @@ local ohString1 = "vrozix"
 game:GetService("ReplicatedStorage").RemoteCalls.GameSpecific.Settings.EnterCode:InvokeServer(ohString1)
 end
 })
+
 CodesTab:AddButton({
 	Name = "Starla",
 	Callback = function()
@@ -378,6 +466,7 @@ local ohString1 = "starla"
 game:GetService("ReplicatedStorage").RemoteCalls.GameSpecific.Settings.EnterCode:InvokeServer(ohString1)
 end
 })
+
 CodesTab:AddButton({
 	Name = "sxmply777",
 	Callback = function()
@@ -386,6 +475,7 @@ local ohString1 = "sxmply777"
 game:GetService("ReplicatedStorage").RemoteCalls.GameSpecific.Settings.EnterCode:InvokeServer(ohString1)
 end
 })
+
 CodesTab:AddButton({
 	Name = "Moe111",
 	Callback = function()
@@ -394,6 +484,7 @@ local ohString1 = "moe111"
 game:GetService("ReplicatedStorage").RemoteCalls.GameSpecific.Settings.EnterCode:InvokeServer(ohString1)
 end
 })
+
 FarmTab:AddButton({
 	Name = "Server Hop",
 	Callback = function()
@@ -403,6 +494,7 @@ local id = game.PlaceId
 game:GetService("TeleportService"):Teleport(id, player)
   	end    
 })
+
 CodesTab:AddButton({
 	Name = "Cookie555",
 	Callback = function()
@@ -411,6 +503,7 @@ local ohString1 = "cookie555"
 game:GetService("ReplicatedStorage").RemoteCalls.GameSpecific.Settings.EnterCode:InvokeServer(ohString1)
 end
 })
+
 PlayerTab:AddSlider({
 	Name = "Speed",
 	Min = 0,
@@ -421,90 +514,6 @@ PlayerTab:AddSlider({
 	Callback = function(Value)
 		TargetWalkspeed = Value
 	end    
-})
-PlayerTab:AddTextbox({
-	Name = "Webhook ID",
-	Default = " ",
-	TextDisappear = true,
-	Callback = function(Value)
-	local Webhook = Value
-	end	  
-})
-
-getgenv().WaitTime = 10
-
-PlayerTab:AddTextbox({
-	Name = "Send data every second",
-	Default = "10",
-	TextDisappear = true,
-	Callback = function(Value)
-		getgenv().WaitTime = Value
-	end	  
-})
-
-for i, v in pairs(game:GetService("Players").LocalPlayer.leaderstats:GetDescendants()) do
-                   v.Value = getgenv().bobux
-                   end
-                   
-local Headers = {["content-type"] = "application/json"} 
-local LocalPlayer = game:GetService("Players").LocalPlayer
-local PlayerName = game.Players.LocalPlayer.Name
-local gameID = game.PlaceId
-local gameNAME = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name
-local Zort = "game.Players.LocalPlayer.Name"
-local Zt = LocalPlayer.UserId
-
-function HOOK()
-    while getgenv().HOOK == true do
-local PlayerData =
-{
-       ["content"] = "",
-       ["embeds"] = {
-           {
-           ["title"] = "Cips baba ile katla!",
-           ["description"] = ":)",
-           ["color"] = tonumber(0x2B6BE4),
-           ["fields"] = {
-               {
-                   ["name"] = "Oyun link:",
-                   ["value"] = "https://www.roblox.com/games/"..gameID,
-                   ["inline"] = true
-},
-               {
-                   ["name"] = "Hesap:",
-                   ["value"] = game.Players.LocalPlayer.Name,
-                   ["inline"] = true
-},
-               {
-                   ["name"] = "Hesabın Roblox Profili:",
-                   ["value"] = "https://www.roblox.com/users/"..Zt.."/profile",
-                   ["inline"] = true
-},
-               {
-                   ["name"] = "Şuanki Statlar:",
-                   ["value"] = getgenv().bobux,
-                   ["inline"] = true
-},
-           },
-       }
-     }
-   }
-
-local PlayerData = game:GetService('HttpService'):JSONEncode(PlayerData)
-
-Request = http_request or request or HttpPost or syn.request
-Request({Url=Webhook, Body=PlayerData, Method="POST", Headers=Headers})
-wait(getgenv().WaitTime)
-end
-end
-
-PlayerTab:AddToggle({
-	Name = "Send Data",
-	Default = false,
-	Callback = function(Value)
-		getgenv().HOOK = Value 
-HOOK() 
-    end
 })
 
 SWTab:AddTextbox({
@@ -525,15 +534,6 @@ SWTab:AddTextbox({
 	end	  
 })
 
-SWTab:AddTextbox({
-	Name = "Reach",
-	Default = "F",
-	TextDisappear = false,
-	Callback = function(Value)
-		getgenv().modifyToolKey = Enum.KeyCode[Value]
-	end	  
-})
-
 SWTab:AddSlider({
 	Name = "Aimbot Distance",
 	Min = 0,
@@ -543,27 +543,6 @@ SWTab:AddSlider({
 	Increment = 1,
 	Callback = function(Value)
 		getgenv().maxRange = Value
-	end    
-})
-
-SWTab:AddSlider({
-	Name = "Reach Size",
-	Min = 0,
-	Max = 50,
-	Default = 30,
-	Color = Color3.fromRGB(255,255,255),
-	Increment = 1,
-	Callback = function(Value)
-		getgenv().ReachSize = Value, Value, Value
-	end    
-})
-
-SWTab:AddDropdown({
-	Name = "Select Reach Type",
-	Default = "Enum.PartType.Ball",
-	Options = {"Enum.PartType.Ball", "Enum.PartType.Block", "Enum.PartType.CornerWedge", "Enum.PartType.Cylinder", "Enum.PartType.Wedge"},
-	Callback = function(Value)
-		getgenv().ReachType = Value
 	end    
 })
 
