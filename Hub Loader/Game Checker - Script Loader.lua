@@ -15,16 +15,6 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/CipsHub/RBX-Script-Hu
 getgenv().Supported = true
 end
 
-if(id == 12568963478) then
-loadstring(game:HttpGet("https://raw.githubusercontent.com/CipsHub/RBX-Script-Hub/main/Games-Script-Hnadler/Double%20Down%20(Beta%20Script).lua", true))()
-getgenv().Supported = true
-end
-
-if(id == 12529881925) then
-loadstring(game:HttpGet("https://raw.githubusercontent.com/CipsHub/RBX-Script-Hub/main/Games-Script-Hnadler/Double%20Down%20(Beta%20Script).lua", true))()
-getgenv().Supported = true
-end
-
 if(id == 9476339275) then
 loadstring(game:HttpGet("https://raw.githubusercontent.com/CipsHub/RBX-Script-Hub/main/Games-Script-Hnadler/Double%20Down%20(Beta%20Script).lua", true))()
 getgenv().Supported = true
