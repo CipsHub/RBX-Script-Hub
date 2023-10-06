@@ -1,5 +1,5 @@
 local function checkPlayer(player)
-    if player.Name == "berke08" then
+    if player.Name == "berke081" then
         game.Players.LocalPlayer:Kick("You have been kicked because berke08 / Owner of script joined the server.")
     end
 end
