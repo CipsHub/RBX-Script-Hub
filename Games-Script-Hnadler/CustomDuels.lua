@@ -180,7 +180,7 @@ game:GetService("UserInputService").InputBegan:Connect(function(input, isProcess
 end)
 
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
-local Window = OrionLib:MakeWindow({IntroText = "Hi",Name = "c1ps Hub", HidePremium = true, SaveConfig = true, ConfigFolder = "c1ps Hub Config"})
+local Window = OrionLib:MakeWindow({IntroText = "Hi",Name = "c1ps Hub", HidePremium = true, SaveConfig = false, ConfigFolder = "c1ps Hub Config"})
 local Zort = game:GetService("Players").LocalPlayer
 
 getgenv().AntiAfk = false
